@@ -56,12 +56,13 @@ exports.Login = asyncHandler(async (req, res) => {
   if (!result) {
     return res.status(401).json({ msg: "Email is not registered with us" });
   }
-  console.log(result);
+  // console.log(result);
   const match = await bcrypt.compare(password, result.password);
   if (!match) {
     return res.status(401).json({ msg: "Password Do Not Match" });
   }
-  const token = jwt.sign({ name: "user" }, process.env.JWT_KEY);
+  const token = jwt.sign({ result }, process.env.JWT_KEY);
+
   res.json({
     msg: "Login Success",
     result: {
@@ -73,4 +74,12 @@ exports.Login = asyncHandler(async (req, res) => {
   });
 });
 
-// amol branch
+exports.getUser = asyncHandler(async (req, res) => {
+  const headers = req.headers.authorization;
+  jwt.verify(headers, process.env.JWT_KEY, function (err, decoded) {
+    // err
+    // decoded undefined
+    res.status(200).json(decoded);
+    console.log(decoded);
+  });
+});
