@@ -13,7 +13,7 @@ const SignUpSchema = mongoose.Schema(
     upi: {
       type: String,
     },
-    mobile: {
+    phone: {
       type: Number,
       required: true,
     },
@@ -24,7 +24,7 @@ const SignUpSchema = mongoose.Schema(
     refaral: {
       type: String,
     },
-    yourstate: {
+    state: {
       type: String,
       required: true,
     },
