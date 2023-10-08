@@ -2,16 +2,17 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const helmet = require("helmet");
+const Razorpay= require('razorpay')
 require("dotenv").config({ path: "./.env" });
 mongoose.connect(process.env.MONGO_URL);
 
 const app = express();
 app.use(helmet());
 app.use(cors());
+const bodyParser = require('body-parser')
+app.use(bodyParser.json())
 app.use(express.json());
-
 app.use("/api", require("./routes/authRoute"));
-app.use("/api", require("./routes/quetionsRoute"));
 app.use((err, req, res, next) => {
   console.log(err);
   res.status(500).json({

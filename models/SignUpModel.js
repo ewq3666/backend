@@ -4,29 +4,29 @@ const SignUpSchema = mongoose.Schema(
   {
     name: {
       type: String,
-      required: true,
+      
     },
     email: {
       type: String,
-      required: true,
+      
     },
     upi: {
       type: String,
     },
-    phone: {
-      type: Number,
-      required: true,
+    mobile: {
+      type: String,
+      
     },
     password: {
       type: String,
-      required: true,
+      
     },
     refaral: {
       type: String,
     },
-    state: {
+    yourstate: {
       type: String,
-      required: true,
+      
     },
     district: {
       type: String,

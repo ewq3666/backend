@@ -2,15 +2,10 @@ const asyncHandler = require("express-async-handler");
 const SignUp = require("../models/SignUpModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { Resend } = require("resend")
 
 exports.SignUpUser = asyncHandler(async (req, res) => {
   const { password, email } = req.body;
-
-  if (password.length < 8) {
-    return res.status(400).json({
-      msg: "Password must be at least 8 characters long",
-    });
-  }
   const found = await SignUp.findOne({ email });
   if (found) {
     return res.status(409).json({
@@ -89,3 +84,31 @@ exports.getUser = asyncHandler(async (req, res) => {
     console.log(decoded);
   });
 });
+
+
+exports.sendMail = async () => {
+  const resend = new Resend('re_XbvFoC1i_KTUnicYCSKxsPjApJ9DgkSr4');
+
+  const res = await resend.emails.send({
+    from: 'earnwithquizee@gmail.com',
+    to: ['prede46@resend.dev'],
+    subject: 'hello world',
+    text: 'it works!',
+    attachments: [
+      {
+        filename: 'invoice.pdf',
+        content: invoiceBuffer,
+      },
+    ],
+    headers: {
+      'X-Entity-Ref-ID': '123456789',
+    },
+    tags: [
+      {
+        name: 'category',
+        value: 'confirm_email',
+      },
+    ],
+  });
+  console.log(res);
+}
