@@ -10,6 +10,7 @@ const {
 const { isUser } = require("../middleware/authProtected");
 const Razorpay = require("razorpay");
 const crypto = require("crypto");
+const { postContest, getContest, deleteContest } = require("../controllers/admin");
 const router = require("express").Router();
 
 router.post("/signup", SignUpUser);
@@ -19,6 +20,10 @@ router.delete("/userinfo/:userId", SignUpUserDelete);
 router.post("/login", Login);
 router.get("/user", isUser, getUser);
 router.post("/mail", sendMail);
+router.post("/admin/contest", postContest);
+router.get("/admin/contest", getContest);
+router.delete("/admin/contest/:id", deleteContest);
+
 router.post("/orders", async (req, res) => {
 	try {
 		const instance = new Razorpay({
